@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Racing fuel calculator</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+</head>
+
+<body>
+    <div id="main">
+        <h1>Fuel calculator</h1>
+        <form>
+            <fieldset>
+                <legend><span>Step 1: Race</span></legend>
+                <div class="step-body">
+                    <div class="fieldset">                    
+                        <span class="fields-header">Race time:</span>
+                        <div class="fields">
+                            <input type="number" id="raceTimeMinutes" placeholder="mm" />:<input type="number" id="raceTimeSeconds" placeholder="ss" />
+                        </div>
+                    </div>
+                    <div class="fieldset">                    
+                        <span class="fields-header">Lap time:</span>
+                        <div class="fields">
+                            <input type="number" id="lapTimeMinutes" placeholder="mm" />:<input type="number" id="lapTimeSeconds" placeholder="ss" />
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend><span>Step 2: Fuel consumption</span></legend>
+                <div class="step-body">
+                    <div class="fieldset">                    
+                        <div class="fields">
+                            <input type="number" id="fuelConsumptionLiters" /> liters per
+                            <input type="number" id="fuelConsumptionLaps" /> laps                       
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend><span>Step 3: Addtional fuel</span></legend>
+                <div class="step-body">
+                    <div class="fieldset">                    
+                        <div class="fields">
+                    <ul>
+                        <li>
+                            <input type="radio" id="additonalLapsSelected" name="additonalFuelSelection" />
+                            <label for="additonalLapsSelected">
+                                + <input type="number" id="additonalLaps" /> laps
+                            </label>   
+                        </li>
+                        <li>
+                            <input type="radio" id="additonalLitersSelected" name="additonalFuelSelection" />
+                            <label for="additonalLitersSelected">
+                                + <input type="number" id="additonalLiters" /> liters
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" id="additonalPercentageSelected" name="additonalFuelSelection" />
+                            <label for="additonalPercentageSelected">
+                                + <input type="number" id="additonalPercentage" /> %
+                            </label>                    
+                        </li>
+                        <li>
+                            <input type="radio" id="nothingAdditionalSelected" name="additonalFuelSelection" checked="true" />
+                            <label for="nothingAdditionalSelected">none</label>                    
+                        </li>
+                    </ul>
+                    </div>
+                    </div>
+                </div>
+            </fieldset>
+            <input type="button" id="calculateButton" value="Calculate!" />
+        </form>
+
+        <div id="results">
+            Results will appear here.
+        </div>
+    </div>
+    
+
+    <script src="src/index.js"></script>
+</body>
+
+</html>
