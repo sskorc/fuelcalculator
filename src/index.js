@@ -41,7 +41,7 @@ function printResults(
     Race will take ${raceLaps} laps.<br/>
     Your fuel consumption is ${fuelConsumptionPerLap.toFixed(2)} liters per lap.<br/>
     You need to tank at least ${regularFuelNeed} liters.<br/>
-    <span class="final-result">It's recommended that you tank <b>${fuelNeed} liters</b>.</span>
+    <span class="final-result">It's recommended that you tank:<br/><b>${fuelNeed} liters</b></span>
   `;
 }
 

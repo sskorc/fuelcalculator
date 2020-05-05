@@ -8,76 +8,108 @@
 </head>
 
 <body>
-    <div id="main">
-        <h1>Fuel calculator</h1>
-        <form>
-            <fieldset>
-                <legend><span>Step 1: Race</span></legend>
-                <div class="step-body">
-                    <div class="fieldset">                    
-                        <span class="fields-header">Race time:</span>
-                        <div class="fields">
-                            <input type="number" id="raceTimeMinutes" placeholder="mm" />:<input type="number" id="raceTimeSeconds" placeholder="ss" />
-                        </div>
-                    </div>
-                    <div class="fieldset">                    
-                        <span class="fields-header">Lap time:</span>
-                        <div class="fields">
-                            <input type="number" id="lapTimeMinutes" placeholder="mm" />:<input type="number" id="lapTimeSeconds" placeholder="ss" />
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend><span>Step 2: Fuel consumption</span></legend>
-                <div class="step-body">
-                    <div class="fieldset">                    
-                        <div class="fields">
-                            <input type="number" id="fuelConsumptionLiters" /> liters per
-                            <input type="number" id="fuelConsumptionLaps" /> laps                       
+    <div id="all">
+        <header><h1>Fuel calculator</h1></header>
+        <div class="cards">
+            <div class="card">
+                <div class="card-container">
+                    <header>Step 1: Race</header>
+                    <div class="card-content-wrapper">
+                        <div class="card-content">
+                            <div class="options">
+                                <fieldset class="option">     
+                                    <legend class="fields-header">Race time</legend>                               
+                                    <div>                                        
+                                        <input type="number" id="raceTimeMinutes" placeholder="mm" />:<input type="number" id="raceTimeSeconds" placeholder="ss" />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="option">           
+                                    <legend class="fields-header">Lap time</legend>                         
+                                    <div>
+                                        <input type="number" id="lapTimeMinutes" placeholder="mm" />:<input type="number" id="lapTimeSeconds" placeholder="ss" />
+                                    </div>
+                                </fieldset>  
+                            </div>
                         </div>
                     </div>
                 </div>
-            </fieldset>
-            <fieldset>
-                <legend><span>Step 3: Addtional fuel</span></legend>
-                <div class="step-body">
-                    <div class="fieldset">                    
-                        <div class="fields">
-                    <ul>
-                        <li>
-                            <input type="radio" id="additonalLapsSelected" name="additonalFuelSelection" />
-                            <label for="additonalLapsSelected">
-                                + <input type="number" id="additonalLaps" /> laps
-                            </label>   
-                        </li>
-                        <li>
-                            <input type="radio" id="additonalLitersSelected" name="additonalFuelSelection" />
-                            <label for="additonalLitersSelected">
-                                + <input type="number" id="additonalLiters" /> liters
-                            </label>
-                        </li>
-                        <li>
-                            <input type="radio" id="additonalPercentageSelected" name="additonalFuelSelection" />
-                            <label for="additonalPercentageSelected">
-                                + <input type="number" id="additonalPercentage" /> %
-                            </label>                    
-                        </li>
-                        <li>
-                            <input type="radio" id="nothingAdditionalSelected" name="additonalFuelSelection" checked="true" />
-                            <label for="nothingAdditionalSelected">none</label>                    
-                        </li>
-                    </ul>
-                    </div>
+            </div>
+            <div class="card">
+                <div class="card-container">
+                    <header>Step 2: Fuel consumption</header>
+                    <div class="card-content-wrapper">
+                        <div class="card-content">
+                            <span class="nowrap"><input type="number" id="fuelConsumptionLiters" /> liters</span> per
+                            <span class="nowrap"><input type="number" id="fuelConsumptionLaps" /> laps</span>
+                        </div>
                     </div>
                 </div>
-            </fieldset>
-            <input type="button" id="calculateButton" value="Calculate!" />
-        </form>
-
-        <div id="results">
-            Results will appear here.
+            </div>
+            <div class="card">
+                <div class="card-container">
+                    <header>Step 3: Additional fuel</header>
+                    <div class="card-content-wrapper">
+                        <div class="card-content">
+                            <ul class="options">
+                                <li class="option">
+                                    <input type="radio" id="additonalLapsSelected" name="additonalFuelSelection" />
+                                    <label for="additonalLapsSelected" class="option-container">
+                                        <div class="option-content-wrapper">
+                                            <div class="option-content">
+                                                + <input type="number" id="additonalLaps" /> laps
+                                            </div>                                        
+                                        </div>                                        
+                                    </label>  
+                                </li>
+                                <li class="option">
+                                    <input type="radio" id="additonalLitersSelected" name="additonalFuelSelection" />
+                                    <label for="additonalLitersSelected" class="option-container">
+                                        <div class="option-content-wrapper">
+                                            <div class="option-content">
+                                                + <input type="number" id="additonalLiters" /> liters
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>
+                                <li class="option">
+                                    <input type="radio" id="additonalPercentageSelected" name="additonalFuelSelection" />
+                                    <label for="additonalPercentageSelected" class="option-container">
+                                        <div class="option-content-wrapper">
+                                            <div class="option-content">
+                                                + <input type="number" id="additonalPercentage" /> %
+                                            </div>                                        
+                                        </div>
+                                    </label>
+                                </li>
+                                <li class="option">
+                                    <input type="radio" id="nothingAdditionalSelected" name="additonalFuelSelection" checked="true" />
+                                    <label for="nothingAdditionalSelected" class="option-container">
+                                        <div class="option-content-wrapper">
+                                            <div class="option-content">
+                                                none
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>    
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-container">
+                    <!-- <div class="card-content-wrapper"> -->
+                        <div class="card-content">
+                            <input type="button" id="calculateButton" value="Calculate!" />
+                            <div id="results">
+                                Results will appear here.
+                            </div>
+                        </div>            
+                    <!-- </div> -->
+                </div>
+            </div>
         </div>
+        <footer>Copyright &copy;</footer>
     </div>
     
 
