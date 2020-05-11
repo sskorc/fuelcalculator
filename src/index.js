@@ -45,11 +45,11 @@ function printResults(
 }
 
 document.getElementById("calculateButton").addEventListener("click", () => {
+    const raceTimeHours = Number(
+        document.getElementById("raceTimeHours").value
+    );
     const raceTimeMinutes = Number(
         document.getElementById("raceTimeMinutes").value
-    );
-    const raceTimeSeconds = Number(
-        document.getElementById("raceTimeSeconds").value
     );
     const lapTimeMinutes = Number(
         document.getElementById("lapTimeMinutes").value
@@ -64,7 +64,7 @@ document.getElementById("calculateButton").addEventListener("click", () => {
         document.getElementById("fuelConsumptionLaps").value
     );
 
-    const raceTime = raceTimeMinutes * 60 + raceTimeSeconds;
+    const raceTime = (raceTimeHours * 60 + raceTimeMinutes) * 60;
     const lapTime = lapTimeMinutes * 60 + lapTimeSeconds;
 
     const raceLaps = calculateRaceLaps(raceTime, lapTime);
