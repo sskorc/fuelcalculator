@@ -59,9 +59,12 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
   }
-  
+
+  .card-container header + .card-content-wrapper {
+      align-items: center;
+  }
+
   .card-content {
     padding: 0.5em;
     width: 100%;
@@ -138,6 +141,12 @@ body {
 }
 
 /* Inputs */
+
+input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 
 input[type="number"]
 {
