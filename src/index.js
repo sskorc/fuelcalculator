@@ -7,11 +7,10 @@ function calculateFuelConsumptionPerLap(fuel, laps) {
 }
 
 function calculateFuelNeed(fuelConsumptionPerLap, laps) {
-    return Math.ceil(fuelConsumptionPerLap * laps);
-}
+    console.log(fuelConsumptionPerLap);
+    console.log(laps);
 
-function addFuelPerLaps(fuel, laps, fuelConsumptionPerLap) {
-    return fuel + calculateFuelNeed(fuelConsumptionPerLap, laps);
+    return Math.ceil(fuelConsumptionPerLap * laps);
 }
 
 function addFuelAsLiters(fuel, additionalFuel) {
@@ -68,9 +67,6 @@ document.getElementById("calculateButton").addEventListener("click", () => {
     const raceTime = raceTimeMinutes * 60 + raceTimeSeconds;
     const lapTime = lapTimeMinutes * 60 + lapTimeSeconds;
 
-    console.log(raceTime);
-    console.log(lapTime);
-
     const raceLaps = calculateRaceLaps(raceTime, lapTime);
     const fuelConsumptionPerLap = calculateFuelConsumptionPerLap(
         fuelConsumptionLiters,
@@ -85,7 +81,8 @@ document.getElementById("calculateButton").addEventListener("click", () => {
         const additionalLaps = Number(
             document.getElementById("additonalLaps").value
         );
-        fuelNeed = addFuelPerLaps(regularFuelNeed, additionalLaps, fuelConsumptionPerLap);
+
+        fuelNeed = calculateFuelNeed(fuelConsumptionPerLap, raceLaps + additionalLaps);
     }
 
     if (document.getElementById("additonalLitersSelected").checked) {
