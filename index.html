@@ -21,16 +21,17 @@
                                 <fieldset class="option">     
                                     <legend class="fields-header">Race time</legend>                               
                                     <div>                                        
-                                        <input type="number" id="raceTimeHours" placeholder="hh" />:<input type="number" id="raceTimeMinutes" placeholder="mm" />
+                                        <input type="number" id="raceTimeHours" placeholder="hh" pattern="[0-9]*" min="0" />:<input type="number" id="raceTimeMinutes" placeholder="mm" pattern="[0-9]*" min="0" max="59.999" />
                                     </div>
                                 </fieldset>
                                 <fieldset class="option">           
                                     <legend class="fields-header">Lap time</legend>                         
                                     <div>
-                                        <input type="number" id="lapTimeMinutes" placeholder="mm" />:<input type="number" id="lapTimeSeconds" placeholder="ss" />
+                                        <input type="number" id="lapTimeMinutes" placeholder="mm" pattern="[0-9]*" min="0" max="59.999" />:<input type="number" id="lapTimeSeconds" placeholder="ss" pattern="[0-9]*" min="0" max="59.999" />
                                     </div>
                                 </fieldset>  
                             </div>
+                            <div id="raceTimeResults" class="semiresults">&nbsp;</div>
                         </div>
                     </div>
                 </div>
@@ -40,8 +41,9 @@
                     <header>Step 2: Fuel consumption</header>
                     <div class="card-content-wrapper">
                         <div class="card-content">
-                            <span class="nowrap"><input type="number" id="fuelConsumptionLiters" /> liters</span> per
-                            <span class="nowrap"><input type="number" id="fuelConsumptionLaps" /> laps</span>
+                            <span class="nowrap"><input type="number" id="fuelConsumptionLiters" pattern="[0-9]*" min="0" step="1" /> liters</span> per
+                            <span class="nowrap"><input type="number" id="fuelConsumptionLaps" pattern="[0-9]*" min="0" step="1" /> laps</span>
+                            <div id="fuelConsumptionResults" class="semiresults">&nbsp;</div>
                         </div>
                     </div>
                 </div>

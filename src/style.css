@@ -140,6 +140,10 @@ body {
     white-space: nowrap;
 }
 
+.semiresults {
+    font-size: 50%;
+}
+
 /* Inputs */
 
 input {
