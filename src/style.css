@@ -196,13 +196,13 @@ input[type="button"]:hover{
 	background-color: orangered;
 }
 
-#results {
+#finalResults {
     margin: 2em 1em;
     line-height: 2em;
     font-size: 50%;
 }
 
-#results b {
+#finalResults b {
     font-size: 200%;
     color: white;
 }

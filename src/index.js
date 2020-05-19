@@ -22,17 +22,37 @@ function isNumber(number) {
     return number !== '' && !isNaN(number);
 }
 
+function printResult2(section, result) {
+    let str = '';
+
+    switch(section) {
+        case 'raceTime':
+            str = `Race will last ${result} laps LOL`;
+            break;
+        case 'fuelConsumption':
+            str = `Your fuel consumption is ${result.toFixed(2)} liters per lap.`;
+            break;
+        case 'final':
+            str = `<span class="final-result">It's recommended that you tank:<br/><b>${result} liters</b></span>`;
+            break;
+        default:
+
+    }
+
+    document.getElementById(`${section}Results`).innerHTML = str;
+}
+
+function clearResult(section) {
+    document.getElementById(`${section}Results`).innerHTML = '&nbsp;';
+}
+
+
 function calculate() {
     const values = getInputValues();
 
-    const raceTime = (values.raceTimeHours * 60 + values.raceTimeMinutes) * 60;
-    const lapTime = values.lapTimeMinutes * 60 + values.lapTimeSeconds;
+    manageRaceTime(values.raceTimeHours, values.raceTimeMinutes, values.lapTimeMinutes, values.lapTimeSeconds);
 
-    const raceLaps = calculateRaceLaps(raceTime, lapTime);
-    const fuelConsumptionPerLap = calculateFuelConsumptionPerLap(
-        values.fuelConsumptionLiters,
-        values.fuelConsumptionLaps
-    );
+    manageFuelConsumption(values.fuelConsumptionLiters, values.fuelConsumptionLaps);
 
     const regularFuelNeed = calculateFuelNeed(fuelConsumptionPerLap, raceLaps);
 
@@ -113,12 +133,65 @@ function printResults(
     regularFuelNeed,
     fuelNeed
 ) {
-    document.getElementById("results").innerHTML = `
+    document.getElementById("finalResults").innerHTML = `
     Race will take ${raceLaps} laps.<br/>
     Your fuel consumption is ${fuelConsumptionPerLap.toFixed(2)} liters per lap.<br/>
     You need to tank at least ${regularFuelNeed} liters.<br/>
     <span class="final-result">It's recommended that you tank:<br/><b>${fuelNeed} liters</b></span>
   `;
+}
+
+function manageRaceTime(raceTimeHours, raceTimeMinutes, lapTimeMinutes, lapTimeSeconds) {
+    if (isNumber(raceTimeHours) && isNumber(raceTimeMinutes) && isNumber(lapTimeMinutes) && isNumber(lapTimeSeconds)) {
+        raceTime = (Math.abs(Number(raceTimeHours)) * 60 + Math.abs(Number(raceTimeMinutes))) * 60;
+        lapTime = Math.abs(Number(lapTimeMinutes)) * 60 + Math.abs(Number(lapTimeSeconds));
+
+        raceLaps = calculateRaceLaps(raceTime, lapTime);
+
+        printResult2('raceTime', raceLaps);
+    } else {
+        raceTime = 0;
+        lapTime = 0
+        raceLaps = 0;
+
+        clearResult('raceTime');
+    }
+}
+
+function manageFuelConsumption(fuelConsumptionLiters, fuelConsumptionLaps) {
+    if (isNumber(fuelConsumptionLiters) && Number(fuelConsumptionLiters) !== 0 && isNumber(fuelConsumptionLaps) && Number(fuelConsumptionLaps) !== 0) {
+        fuelConsumptionPerLap = calculateFuelConsumptionPerLap(Math.abs(Number(fuelConsumptionLiters)), Math.abs(Number(fuelConsumptionLaps)));
+
+        printResult2('fuelConsumption', fuelConsumptionPerLap);
+    } else {
+        fuelConsumptionPerLap = 0;
+
+        clearResult('fuelConsumption');
+    }
+}
+
+function manageAdditionalFuel(additionType, isSelected, additionalValue) {
+    if(isSelected && raceLaps > 0 && fuelConsumptionPerLap > 0) {                
+        if (isNumber(additionalValue)) {
+            switch(additionType) {
+                case 'additionalLaps':
+                    additionalFuelNeed = calculateFuelNeed(fuelConsumptionPerLap, Math.abs(Number(additionalValue)));
+                    break;
+                case 'additionalLiters':
+                    additionalFuelNeed = Math.abs(Number(additionalValue));
+                    break;
+                case 'additionalPercentage':
+                    additionalFuelNeed = Math.ceil(Math.abs(Number(additionalValue))/100 * fuelNeed);
+                    break;
+                default:
+                    additionalFuelNeed = 0;    
+            }            
+        } else {
+            additionalFuelNeed = 0;
+        }               
+    } else {
+        fuelNeed = 0;
+    }
 }
 
 const url = new URL(document.URL);
@@ -128,7 +201,7 @@ if(sh) {
     calculate();
 }
 
-document.getElementById("calculateButton").addEventListener("click", calculate);
+//document.getElementById("calculateButton").addEventListener("click", calculate);
 
 // document.getElementById("raceTimeMinutes").addEventListener("input", () => {
 //     console.log('s');
@@ -138,12 +211,12 @@ const inputs = document.getElementsByTagName("input");
 
 console.log(inputs.namedItem('raceTimeHours'));
 
-let raceTime = 0;
-let lapTime = 0;
-let raceLaps = 0;
-let fuelConsumptionPerLap = 0;
-let additionalFuelNeed = 0;
-let fuelNeed = 0;
+var raceTime = 0;
+var lapTime = 0;
+var raceLaps = 0;
+var fuelConsumptionPerLap = 0;
+var additionalFuelNeed = 0;
+var fuelNeed = 0;
 
 for (let input of inputs) {
     // console.log(input.id);
@@ -157,117 +230,44 @@ for (let input of inputs) {
             const lapTimeMinutes = inputs.namedItem('lapTimeMinutes').value;
             const lapTimeSeconds = inputs.namedItem('lapTimeSeconds').value;
 
-            if (isNumber(raceTimeHours) && isNumber(raceTimeMinutes) && isNumber(lapTimeMinutes) && isNumber(lapTimeSeconds)) {
-                raceTime = (Math.abs(Number(raceTimeHours)) * 60 + Math.abs(Number(raceTimeMinutes))) * 60;
-                lapTime = Math.abs(Number(lapTimeMinutes)) * 60 + Math.abs(Number(lapTimeSeconds));
-
-                raceLaps = calculateRaceLaps(raceTime, lapTime);
-
-                document.getElementById("raceTimeResults").innerHTML = `Race will last ${raceLaps} laps`;
-            } else {
-                raceTime = 0;
-                lapTime = 0
-                raceLaps = 0;
-
-                document.getElementById("raceTimeResults").innerHTML = `&nbsp;`;
-            }
+            manageRaceTime(raceTimeHours, raceTimeMinutes, lapTimeMinutes, lapTimeSeconds);
         });
     } else if (input.id === "fuelConsumptionLiters" || input.id === "fuelConsumptionLaps") {
         input.addEventListener("input", () => {
             const fuelConsumptionLiters = document.getElementById("fuelConsumptionLiters").value;
             const fuelConsumptionLaps = document.getElementById("fuelConsumptionLaps").value;
 
-            if (isNumber(fuelConsumptionLiters) && Number(fuelConsumptionLiters) !== 0 && isNumber(fuelConsumptionLaps) && Number(fuelConsumptionLaps) !== 0) {
-                fuelConsumptionPerLap = calculateFuelConsumptionPerLap(Math.abs(Number(fuelConsumptionLiters)), Math.abs(Number(fuelConsumptionLaps)));
-
-                document.getElementById("fuelConsumptionResults").innerHTML = `Your fuel consumption is ${fuelConsumptionPerLap.toFixed(2)} liters per lap.`;
-            } else {
-                fuelConsumptionPerLap = 0;
-
-                document.getElementById("fuelConsumptionResults").innerHTML = `&nbsp;`;
-            }
+            manageFuelConsumption(fuelConsumptionLiters, fuelConsumptionLaps);
         });
     } else if (input.id === "additionalLapsSelected") {
         input.addEventListener("input", () => {
-            if(input.checked && raceLaps > 0 && fuelConsumptionPerLap > 0) {
-                const additionalLaps = document.getElementById("additionalLaps").value;
-                if (isNumber(additionalLaps)) {
-                    additionalFuelNeed = calculateFuelNeed(fuelConsumptionPerLap, Math.abs(Number(additionalLaps)));
-                } else {
-                    additionalFuelNeed = 0;
-                }               
-            } else {
-                fuelNeed = 0;
-            }
+            const additionalLaps = document.getElementById("additionalLaps").value;
+            manageAdditionalFuel('additionalLaps', input.checked, additionalLaps);
         });
     } else if (input.id === "additionalLaps") {
         input.addEventListener("input", () => {
             const isAdditionalLapsSelected = document.getElementById("additionalLapsSelected").checked;
-            if (isAdditionalLapsSelected && raceLaps > 0 && fuelConsumptionPerLap > 0) {
-                const additionalLaps = input.value;
-                if (isNumber(additionalLaps)) {
-                    additionalFuelNeed = calculateFuelNeed(fuelConsumptionPerLap, Math.abs(Number(additionalLaps)));
-                } else {
-                    additionalFuelNeed = 0;
-                }
-            } else {
-                fuelNeed = 0;
-            }
+            manageAdditionalFuel('additionalLaps', isAdditionalLapsSelected, input.value);
         });
     } else if (input.id === "additionalLitersSelected") {
         input.addEventListener("input", () => {
-            if(input.checked && raceLaps > 0 && fuelConsumptionPerLap > 0) {
-                const additionalLiters = document.getElementById("additionalLiters").value;
-                if (isNumber(additionalLiters)) {
-                    additionalFuelNeed = Math.abs(Number(additionalLiters));
-                } else {
-                    additionalFuelNeed = 0;
-                }               
-            } else {
-                fuelNeed = 0;
-            }
+            const additionalLiters = document.getElementById("additionalLiters").value;
+            manageAdditionalFuel('additionalLiters', input.checked, additionalLiters);
         });
     } else if (input.id === "additionalLiters") {
         input.addEventListener("input", () => {
             const isAdditionalLitersSelected = document.getElementById("additionalLitersSelected").checked;
-            if (isAdditionalLitersSelected && raceLaps > 0 && fuelConsumptionPerLap > 0) {
-                const additionalLiters = input.value;
-                if (isNumber(additionalLiters)) {
-                    additionalFuelNeed = Math.abs(Number(additionalLiters));
-                } else {
-                    additionalFuelNeed = 0;
-                }
-            } else {
-                fuelNeed = 0;
-            }
+            manageAdditionalFuel('additionalLiters', isAdditionalLitersSelected, input.value);
         });
     } else if (input.id === "additionalPercentageSelected") {
         input.addEventListener("input", () => {
-            if(input.checked && raceLaps > 0 && fuelConsumptionPerLap > 0) {
-                const additionalPercentage = document.getElementById("additionalPercentage").value;
-                if (isNumber(additionalPercentage)) {
-                    additionalFuelNeed = Math.ceil(Math.abs(Number(additionalPercentage))/100 * fuelNeed);
-                } else {
-                    additionalFuelNeed = 0;
-                }               
-            } else {
-                fuelNeed = 0;
-            }
+            const additionalPercentage = document.getElementById("additionalPercentage").value;
+            manageAdditionalFuel('additionalPercentage', input.checked, additionalPercentage);
         });
     } else if (input.id === "additionalPercentage") {
         input.addEventListener("input", () => {
             const isAdditionalPercentageSelected = document.getElementById("additionalPercentageSelected").checked;
-            if (isAdditionalPercentageSelected && raceLaps > 0 && fuelConsumptionPerLap > 0) {
-                const additionalPercentage = input.value;
-                if (isNumber(additionalPercentage)) {
-                    additionalFuelNeed = Math.ceil(Math.abs(Number(additionalPercentage))/100 * fuelNeed);
-                    console.log(Math.abs(Number(additionalPercentage)));
-                } else {
-                    additionalFuelNeed = 0;
-                }
-            } else {
-                fuelNeed = 0;
-            }
+            manageAdditionalFuel('additionalPercentage', isAdditionalPercentageSelected, input.value);
         });
     } else if (input.id === "nothingAdditionalSelected") {
         input.addEventListener("input", () => {
@@ -280,9 +280,9 @@ for (let input of inputs) {
     input.addEventListener("input", () => {
         if (raceLaps > 0 && fuelConsumptionPerLap > 0) {
             fuelNeed = calculateFuelNeed(fuelConsumptionPerLap, raceLaps) + additionalFuelNeed;
-            document.getElementById("results").innerHTML = `<span class="final-result">It's recommended that you tank:<br/><b>${fuelNeed} liters</b></span>`;
+            printResult2('final', fuelNeed)
         } else {
-            document.getElementById("results").innerHTML = `Results will appear here.`;
+            clearResult('final');
         }
     });
 
