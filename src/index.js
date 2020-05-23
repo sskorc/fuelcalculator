@@ -35,7 +35,7 @@ function calculate() {
         if (values[field + 'Selected']) { additionalFuel.manage(field, true, values[field]); }
     })
 
-    finalFuel.manage(raceLaps.result, fuelConsumption.result, additionalFuel.result);
+    fuelNeed.manage(raceLaps.result, fuelConsumption.result, additionalFuel.result);
 }
 
 function observeField(input, inputs) {
@@ -69,7 +69,7 @@ function observeField(input, inputs) {
         });
     }
 
-    finalFuel.manage(raceLaps.result, fuelConsumption.result, additionalFuel.result);
+    fuelNeed.manage(raceLaps.result, fuelConsumption.result, additionalFuel.result);
 }
 
 function getInputValues() {
@@ -152,13 +152,13 @@ const additionalFuel = {
             if (isNumber(additionalValue)) {
                 switch(additionType) {
                     case 'additionalLaps':
-                        this.result = finalFuel.calculate(fuelConsumption.result, Math.abs(Number(additionalValue)));
+                        this.result = fuelNeed.calculate(fuelConsumption.result, Math.abs(Number(additionalValue)));
                         break;
                     case 'additionalLiters':
                         this.result = Math.abs(Number(additionalValue));
                         break;
                     case 'additionalPercentage':
-                        this.result = Math.ceil(Math.abs(Number(additionalValue))/100 * finalFuel.result);
+                        this.result = Math.ceil(Math.abs(Number(additionalValue))/100 * fuelNeed.result);
                         break;
                     default:
                         this.result = 0;    
@@ -167,18 +167,18 @@ const additionalFuel = {
                 this.result = 0;
             }               
         } else {
-            finalFuel.clear();
+            fuelNeed.clear();
         }
     },
     clear() { this.result = 0 }
 }
 
-const finalFuel = {
+const fuelNeed = {
     result: 0,
     manage(raceLapsResult, fuelConsumptionResult, additionalFuelResult) {
         if (raceLapsResult > 0 && fuelConsumptionResult > 0) {
-            this.result = this.calculate(fuelConsumptionResult, raceLapsResult) + additionalFuelResult;
-            printResult('final', this.result)
+            this.result = this.calculate(fuelConsumptionResult, raceLapsResult);
+            printResult('final', this.result + additionalFuelResult)
         } else {
             clearResult('final');
         }
