@@ -135,6 +135,10 @@ body {
   #all > footer {
     margin-top: 2em;
   }
+
+  div.fields {
+    margin: 0.5em 0;
+  }
   
 .nowrap {
     white-space: nowrap;
@@ -152,7 +156,8 @@ input {
     appearance: none;
 }
 
-input[type="number"]
+input[type="number"],
+input[type="text"]
 {
 	outline: none;
 	background: #444;
@@ -166,7 +171,13 @@ input[type="number"]
 input[type="number"]:focus
 {
 	box-shadow: 0 0 5px #aaa;
-	border: 1px solid #aaa;
+  border: 1px solid #aaa;
+}
+
+input#shareLink {
+  font-size: 50%;
+  min-width: 80%;
+  font-family: monospace;
 }
 
 input[type=radio] {

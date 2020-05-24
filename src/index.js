@@ -208,5 +208,5 @@ for (let input of inputs) {
 
 document.getElementById("shareButton").addEventListener("click", () => {
     const encodedString = btoa(exportValuesToCSV(getInputValues()));
-    console.log(location.protocol + '//' + location.host + location.pathname + '?sh=' + encodedString);
+    document.getElementById('shareLink').value = location.protocol + '//' + location.host + location.pathname + '?sh=' + encodedString;
 });

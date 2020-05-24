@@ -41,8 +41,10 @@
                     <header>Step 2: Fuel consumption</header>
                     <div class="card-content-wrapper">
                         <div class="card-content">
-                            <span class="nowrap"><input type="number" id="fuelConsumptionLiters" pattern="[0-9]*" min="0" step="1" /> liters</span> per
-                            <span class="nowrap"><input type="number" id="fuelConsumptionLaps" pattern="[0-9]*" min="0" step="1" /> laps</span>
+                            <div class="fields">
+                                <span class="nowrap"><input type="number" id="fuelConsumptionLiters" pattern="[0-9]*" min="0" step="1" /> liters</span> per
+                                <span class="nowrap"><input type="number" id="fuelConsumptionLaps" pattern="[0-9]*" min="0" step="1" /> laps</span>
+                            </div>
                             <div id="fuelConsumptionResults" class="semiresults">&nbsp;</div>
                         </div>
                     </div>
@@ -102,12 +104,10 @@
             <div class="card">
                 <div class="card-container">
                     <div class="card-content-wrapper">
-                        <div class="card-content">
-                            <input type="button" id="calculateButton" value="Calculate!" />
+                        <div class="card-content">                            
+                            <div id="finalResults">&nbsp;</div>
                             <input type="button" id="shareButton" value="Share!" />
-                            <div id="finalResults">
-                                Results will appear here.
-                            </div>
+                                <input id="shareLink" type="text" value="" />
                         </div>            
                     </div>
                 </div>
