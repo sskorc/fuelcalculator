@@ -148,6 +148,10 @@ body {
     font-size: 50%;
 }
 
+a {
+  color: #ddd;
+}
+
 /* Inputs */
 
 input {
