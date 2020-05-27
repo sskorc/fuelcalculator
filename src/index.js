@@ -101,7 +101,7 @@
         });
 
         booleanFields.forEach((fieldName, i) => {
-            document.getElementById(fieldName).checked = (values[i + 9] === 'true');
+            document.getElementById(fieldName).checked = (values[i + numericFields.length] === 'true');
         });
     }
 
